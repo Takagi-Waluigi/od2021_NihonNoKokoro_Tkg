@@ -1,10 +1,13 @@
 #pragma once
 
 #include "ofMain.h"
-#include "AngleTester.h"
-#include "BasicSimulation.h"
-#include "Pathfinder.h"
+#include "ofxGui.h"
+#include "ofxOsc.h"
 
+#define SEND_PORT 8005
+#define RPI4_IP "127.0.0.1"
+#define RECIEVE_PORT 5006
+#define WIN_IP "127.0.0.1"
 
 class ofApp : public ofBaseApp{
 
@@ -24,10 +27,25 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		
-		AngleTester angleTester;
-		BasicSimulation simulator;
-		Pathfinder pathfinder;
 
-		int mode = 0;
+		ofVec3f barrier(ofVec3f inputPos);
+
+		ofxOscSender sender;
+		ofxOscReceiver reciever;
+
+		ofxPanel gui;
+		ofParameter<bool> enableSend;
+		bool _enableSend;
+		ofParameter<int> drawMode;
+		ofParameter<int> separate;
+		int status;
+		int _status;
+
+		vector<ofVec3f> path;
+		int currentID;
+
+		int currentFrame = 0;
+		int lastFrame = 0;
+
+		ofVec3f acceleration;
 };
